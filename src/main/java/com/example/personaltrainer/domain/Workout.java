@@ -18,7 +18,7 @@ public class Workout {
 	private long id;
 	private String title;
 	private int duration;
-	private String username;
+
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
@@ -33,23 +33,17 @@ public class Workout {
 	
 	public Workout() {}
 	
-	public Workout(String username, String title, LocalDate date, int duration, Focus focus) {
+	public Workout(String title, LocalDate date, int duration, Focus focus, User user) {
 		super();
 		this.title = title;
 		this.date = date;
 		this.duration = duration;
 		this.focus = focus;
-		this.username = username;
+		this.user = user;
 	}
 	
 
-	public String getUsername() {
-		return username;
-	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
 
 	public Focus getFocus() {
 		return focus;
@@ -91,8 +85,18 @@ public class Workout {
 		this.duration = duration;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	@Override
 	public String toString() {
 		return "Workout [id=" + id + ", title=" + title + ", date=" + date + ", duration=" + duration + ", user=" + user + "]";
 	}
+
+	
 }

@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource
 public interface WorkoutRepository extends CrudRepository<Workout, Long>{
 	
 	// FETCH WORKOUT BY TITLE

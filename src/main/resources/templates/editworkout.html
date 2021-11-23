@@ -10,10 +10,10 @@
 <div>
  <form th:object="${workout}" th:action="@{../save}" action="#" method="post">
 <input type="hidden" th:field="*{id}" class="form-control"/>
-<label for="title">Title</label><br>
+<label for="title">Activity</label><br>
 <input type="text" th:field="*{title}" /><br><br> 
 <label for="author">Date</label><br>
-<input type="text" th:field="*{date}" /><br><br> 
+<input type="date" th:field="*{date}" /><br><br> 
 <label for="year">Duration</label><br>
 <input type="text" th:field="*{duration}" /><br><br> 
 

@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.example.personaltrainer.domain.FocusRepository;
+import com.example.personaltrainer.domain.UserRepository;
 import com.example.personaltrainer.domain.Workout;
 import com.example.personaltrainer.domain.WorkoutRepository;
 
@@ -25,6 +26,9 @@ public class WorkoutRepositoryTests {
 	private WorkoutRepository wrepository;
 	@Autowired
 	private FocusRepository frepository;
+	@Autowired
+	private UserRepository urepository;
+	
 	
 	@Test
 	public void findByTitleShouldReturnFocus() {
@@ -36,8 +40,8 @@ public class WorkoutRepositoryTests {
 	@Test
 	public void createNewWorkout() {
 		
-		Workout workout = new Workout("TestUser","Spinning", LocalDate.of(2021, 1, 24), 40, 
-		frepository.findByName("Endurance").get(0));
+		Workout workout = new Workout("Spinning", LocalDate.of(2021, 1, 24), 40, 
+		frepository.findByName("Endurance").get(0),urepository.findByUsername("user1"));
 		wrepository.save(workout);
 		assertThat(workout.getId()).isNotNull();
 	}

@@ -31,7 +31,7 @@ public class PersonaltrainerApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner insertDemoWorkouts(WorkoutRepository wrepository, FocusRepository frepository) {
+	public CommandLineRunner insertDemoWorkouts(UserRepository urepository, WorkoutRepository wrepository, FocusRepository frepository) {
 		return (args) -> {
 			
 			Focus f1 = new Focus("Strength");
@@ -43,10 +43,6 @@ public class PersonaltrainerApplication {
 
 			// COMMAND LINE RUNNER FOR CREATING TEST WORKOUTS
 
-			log.info("save couple of workouts");
-			wrepository.save(new Workout("User1","Abs & Core", LocalDate.of(2021, 8, 14), 45, f1 ));
-			wrepository.save(new Workout("User1","Glutes & Legs", LocalDate.of(2021, 9, 16), 75, f2));
-			wrepository.save(new Workout("User2","Swimming", LocalDate.of(2021, 10, 16), 30, f3 ));
 
 
 			// CONSOLE INFORMATION
@@ -61,7 +57,15 @@ public class PersonaltrainerApplication {
 						"user3@gmail.com","USER");
 			User user2 = new User("admin", "$2a$10$2cDsb2DKRse3XPg3MDnSWe.1gxRMqmnwThnmxSbC2KrmPMqIp.DNm",
 						"user4@gmail.com", "ADMIN");
-				
+
+			urepository.save(user1);
+
+			log.info("save couple of workouts");
+			wrepository.save(new Workout("Abs & Core", LocalDate.of(2021, 8, 14), 45, f1, user1 ));
+			wrepository.save(new Workout("Glutes & Legs", LocalDate.of(2021, 9, 16), 75, f2, user1));
+			wrepository.save(new Workout("Swimming", LocalDate.of(2021, 10, 16), 30, f3,user1 ));
+			
+			
 			urepository.save(user1);
 			urepository.save(user2);
 				

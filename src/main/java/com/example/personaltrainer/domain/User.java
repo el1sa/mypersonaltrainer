@@ -19,7 +19,7 @@ public class User {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, updatable = false)
-    private Long id;
+    private Long userid;
 
     // Username with unique constraint
     @Column(name = "username", nullable = false, unique = true)
@@ -35,6 +35,7 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
     
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Workout> workouts;
     
@@ -50,11 +51,11 @@ public class User {
 	}
     
     public Long getId() {
-		return id;
+		return userid;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.userid = id;
 	}
 
 	public String getUsername() {

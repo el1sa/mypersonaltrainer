@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.personaltrainer.domain.Focus;
 import com.example.personaltrainer.domain.FocusRepository;
 import com.example.personaltrainer.domain.Workout;
 import com.example.personaltrainer.domain.WorkoutRepository;
@@ -73,9 +74,12 @@ public class WorkoutController {
 	    }       
 		
 		// ADD WORKOUT
-		@RequestMapping(value = "/add")
+	    @RequestMapping(value = "/add")
 		public String addWorkout(Model model) {
-		model.addAttribute("workout", new Workout("username", "title", LocalDate.now(), 0, "focus"));
+	    	UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    	String username = user.getUsername();
+			User userNow = urepository.findByUsername(username);
+		model.addAttribute("workout", new Workout("title", LocalDate.now(), 0, new Focus("focus"), userNow));
 		model.addAttribute("focuses", frepository.findAll());
 		return "addworkout";
 		}
@@ -83,6 +87,8 @@ public class WorkoutController {
 		// SAVE WORKOUT
 		@RequestMapping(value = "/save", method = RequestMethod.POST)
 		public String save(Workout workout) {
+			System.out.println("SAVE ENDPOINT");
+			System.out.println(workout);
 			wrepository.save(workout);
 			return "redirect:workoutlist";
 		}
