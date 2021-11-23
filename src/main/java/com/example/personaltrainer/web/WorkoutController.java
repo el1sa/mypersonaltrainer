@@ -78,7 +78,7 @@ public class WorkoutController {
 		public String addWorkout(Model model) {
 	    	UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    	String username = user.getUsername();
-			User userNow = urepository.findByUsername(username);
+			User userNow = urepository.findByUsername(username);	
 		model.addAttribute("workout", new Workout("title", LocalDate.now(), 0, new Focus("focus"), userNow));
 		model.addAttribute("focuses", frepository.findAll());
 		return "addworkout";
@@ -89,6 +89,10 @@ public class WorkoutController {
 		public String save(Workout workout) {
 			System.out.println("SAVE ENDPOINT");
 			System.out.println(workout);
+			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    	String username = user.getUsername();
+			User userNow = urepository.findByUsername(username);
+			workout.setUser(userNow);
 			wrepository.save(workout);
 			return "redirect:workoutlist";
 		}
