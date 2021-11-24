@@ -21,7 +21,7 @@
 				id="focuslist" th:field="*{focus}" class="form-control">
 				<option th:each="focus: ${focuses}" th:value="${focus.focusid}"
 					th:text="${focus.name}"></option>
-			</select><br> <input type="submit" value="Save"></input>
+			</select><br> <input type="submit" value="Save" class="btn btn-primary"></input>
 			<a href="/workoutlist" class="btn btn-danger">Cancel</a>
 		</form>
 	</div>

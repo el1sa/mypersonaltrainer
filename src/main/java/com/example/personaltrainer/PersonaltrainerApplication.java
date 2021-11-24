@@ -56,11 +56,11 @@ public class PersonaltrainerApplication {
 			User user1 = new User("user", "$2a$10$mxeL6I4rdcDw8GNem3s8auocksGSozaqqqx2/G4REYI0lPw5sezU.",
 					"user3@gmail.com", "USER");
 			// ADMIN/ADMIN CREATED BUT NO AUTHORITIES
-			User user2 = new User("admin", "$2a$10$2cDsb2DKRse3XPg3MDnSWe.1gxRMqmnwThnmxSbC2KrmPMqIp.DNm",
-					"user4@gmail.com", "ADMIN");
+			//User user2 = new User("admin", "$2a$10$2cDsb2DKRse3XPg3MDnSWe.1gxRMqmnwThnmxSbC2KrmPMqIp.DNm",
+			//"user4@gmail.com", "ADMIN");
 
 			urepository.save(user1);
-			urepository.save(user2);
+			//urepository.save(user2);
 
 			log.info("save couple of workouts");
 			wrepository.save(new Workout("Abs", LocalDate.of(2021, 8, 14), 45, f1, user1));
