@@ -13,26 +13,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Focus {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long focusid;
 	private String name;
-	
+
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="focus")
-    private List<Workout> workouts;
-	
-	
-	public Focus () {
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "focus")
+	private List<Workout> workouts;
+
+	public Focus() {
 	}
 
 	public Focus(String name) {
 		super();
 		this.name = name;
 	}
-	
 
 	public List<Workout> getWorkouts() {
 		return workouts;
@@ -41,7 +39,7 @@ public class Focus {
 	public void setWorkouts(List<Workout> workouts) {
 		this.workouts = workouts;
 	}
-	
+
 	public long getFocusId() {
 		return focusid;
 	}
@@ -50,7 +48,6 @@ public class Focus {
 		this.focusid = focusId;
 	}
 
-
 	public String getName() {
 		return name;
 	}
@@ -58,7 +55,7 @@ public class Focus {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Focus [focusid=" + focusid + ", name=" + name + "]";

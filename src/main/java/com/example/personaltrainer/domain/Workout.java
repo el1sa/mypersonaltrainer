@@ -14,25 +14,25 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Workout {
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String title;
 	private int duration;
 
-	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
-	
-	@ManyToOne //(fetch = FetchType.LAZY)
-    @JoinColumn(name = "focusid")
-    private Focus focus;
-	
+
+	@ManyToOne // (fetch = FetchType.LAZY)
+	@JoinColumn(name = "focusid")
+	private Focus focus;
+
 	@ManyToOne
-	@JoinColumn(name="userid")
+	@JoinColumn(name = "userid")
 	private User user;
-	
-	public Workout() {}
-	
+
+	public Workout() {
+	}
+
 	public Workout(String title, LocalDate date, int duration, Focus focus, User user) {
 		super();
 		this.title = title;
@@ -41,9 +41,6 @@ public class Workout {
 		this.focus = focus;
 		this.user = user;
 	}
-	
-
-
 
 	public Focus getFocus() {
 		return focus;
@@ -52,7 +49,7 @@ public class Workout {
 	public void setFocus(Focus focus) {
 		this.focus = focus;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -84,7 +81,7 @@ public class Workout {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -92,11 +89,11 @@ public class Workout {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Workout [id=" + id + ", title=" + title + ", date=" + date + ", duration=" + duration + ", user=" + user + "]";
+		return "Workout [id=" + id + ", title=" + title + ", date=" + date + ", duration=" + duration + ", user=" + user
+				+ "]";
 	}
 
-	
 }

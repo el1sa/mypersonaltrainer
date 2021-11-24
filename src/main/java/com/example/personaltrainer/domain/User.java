@@ -14,43 +14,43 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="usertable")
+@Table(name = "usertable")
 public class User {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, updatable = false)
-    private Long userid;
+	private Long userid;
 
-    // Username with unique constraint
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+	// Username with unique constraint
+	@Column(name = "username", nullable = false, unique = true)
+	private String username;
 
-    @Column(name = "password", nullable = false)
-    @JsonIgnore
-    private String passwordHash;
-    
-    @Column(name = "email", nullable = false)
-    private String email;
+	@Column(name = "password", nullable = false)
+	@JsonIgnore
+	private String passwordHash;
 
-    @Column(name = "role", nullable = false)
-    private String role;
-    
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Workout> workouts;
-    
-    public User() {
-    }
-    
-    public User(String username, String passwordHash, String email, String role) {
+	@Column(name = "email", nullable = false)
+	private String email;
+
+	@Column(name = "role", nullable = false)
+	private String role;
+
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private List<Workout> workouts;
+
+	public User() {
+	}
+
+	public User(String username, String passwordHash, String email, String role) {
 		super();
 		this.username = username;
 		this.passwordHash = passwordHash;
 		this.email = email;
 		this.role = role;
 	}
-    
-    public Long getId() {
+
+	public Long getId() {
 		return userid;
 	}
 
@@ -73,11 +73,11 @@ public class User {
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -93,7 +93,7 @@ public class User {
 	public List<Workout> getWorkouts() {
 		return workouts;
 	}
-	
+
 	public void setWorkouts(List<Workout> workouts) {
 		this.workouts = workouts;
 	}

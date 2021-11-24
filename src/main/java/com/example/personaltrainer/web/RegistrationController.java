@@ -16,17 +16,17 @@ import com.example.personaltrainer.domain.User;
 
 @Controller
 public class RegistrationController {
-	
+
 	@Autowired
 	private UserRepository urepository;
-	
+
 	// REGISTRATION
 	@RequestMapping(value = "registration")
 	public String addUser(Model model) {
 		model.addAttribute("signupform", new SignupForm());
 		return "registration";
 	}
-	
+
 	// CREATE NEW USER
 	@RequestMapping(value = "saveuser", method = RequestMethod.POST)
 	public String save(@Valid @ModelAttribute("signupform") SignupForm signupForm, BindingResult bindingResult) {
@@ -57,7 +57,5 @@ public class RegistrationController {
 		}
 		return "redirect:/login";
 	}
-
-	
 
 }

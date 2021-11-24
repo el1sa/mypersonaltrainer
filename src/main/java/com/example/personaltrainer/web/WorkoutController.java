@@ -22,95 +22,93 @@ import com.example.personaltrainer.domain.WorkoutRepository;
 import com.example.personaltrainer.domain.User;
 import com.example.personaltrainer.domain.UserRepository;
 
-
 @Controller
 public class WorkoutController {
-	
+
 	@Autowired
 	private WorkoutRepository wrepository;
-	
-	@Autowired 
+
+	@Autowired
 	private FocusRepository frepository;
-	
+
 	@Autowired
 	private UserRepository urepository;
-	
-		
-		@RequestMapping("/")
-		public String hello(Model model) {
-			return "index";
-		}
-	
-		// LOGIN
-		@RequestMapping(value="/login")
-		public String login() {
-			return "login";
-		}    
-	
-		// SHOW ALL WORKOUTS IN THYMELEAF TEMPLATE
-		@RequestMapping(value = "/workoutlist")
-		public String workoutList(Model model) {
-			
+
+	@RequestMapping("/")
+	public String hello(Model model) {
+		return "index";
+	}
+
+	// LOGIN
+	@RequestMapping(value = "/login")
+	public String login() {
+		return "login";
+	}
+
+	// SHOW USERS WORKOUTS IN THYMELEAF TEMPLATE
+	@RequestMapping(value = "/workoutlist")
+	public String workoutList(Model model) {
+
 		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = user.getUsername();
 		User userNow = urepository.findByUsername(username);
-			System.out.println("ELISA START");
-			System.out.println(user);
-			System.out.println("ELISA END");
+		System.out.println("ELISA START");
+		System.out.println(user);
+		System.out.println("ELISA END");
 		model.addAttribute("workouts", wrepository.findByUser(userNow));
 		return "workoutlist";
-		}
-		
-		// RESTFUL SERVICE TO GET ALL WORKOUTS
-		@RequestMapping(value="/workouts", method = RequestMethod.GET)
-		public @ResponseBody List<Workout> workoutListRest() {
+	}
+
+	// RESTFUL SERVICE TO GET ALL WORKOUTS
+	@RequestMapping(value = "/workouts", method = RequestMethod.GET)
+	public @ResponseBody List<Workout> workoutListRest() {
 		return (List<Workout>) wrepository.findAll();
-		}
-		
-		// RESTFUL SERVICE TO GET WORKOUT BY ID
-	    @RequestMapping(value="/workout/{id}", method = RequestMethod.GET)
-	    public @ResponseBody Optional<Workout> findBookRest(@PathVariable("id") Long workoutId) {	
-	    	return wrepository.findById(workoutId);
-	    }       
-		
-		// ADD WORKOUT
-	    @RequestMapping(value = "/add")
-		public String addWorkout(Model model) {
-	    	UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    	String username = user.getUsername();
-			User userNow = urepository.findByUsername(username);	
+	}
+
+	// RESTFUL SERVICE TO GET WORKOUT BY ID
+	@RequestMapping(value = "/workout/{id}", method = RequestMethod.GET)
+	public @ResponseBody Optional<Workout> findBookRest(@PathVariable("id") Long workoutId) {
+		return wrepository.findById(workoutId);
+	}
+
+	// ADD WORKOUT
+	@RequestMapping(value = "/add")
+	public String addWorkout(Model model) {
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = user.getUsername();
+		User userNow = urepository.findByUsername(username);
 		model.addAttribute("workout", new Workout("title", LocalDate.now(), 0, new Focus("focus"), userNow));
 		model.addAttribute("focuses", frepository.findAll());
 		return "addworkout";
-		}
-		
-		// SAVE WORKOUT
-		@RequestMapping(value = "/save", method = RequestMethod.POST)
-		public String save(Workout workout) {
-			System.out.println("SAVE ENDPOINT");
-			System.out.println(workout);
-			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    	String username = user.getUsername();
-			User userNow = urepository.findByUsername(username);
-			workout.setUser(userNow);
-			wrepository.save(workout);
-			return "redirect:workoutlist";
-		}
-		
-		// DELETE WORKOUT
-		@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-		@PreAuthorize("hasAuthority('ADMIN')")
-		public String deleteBook(@PathVariable("id") Long workoutId, Model model) {
-		 wrepository.deleteById(workoutId);
-		 return "redirect:../workoutlist";
-		}
-		
-		// EDIT WORKOUT
-		@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-		public String editWorkout(@PathVariable("id") Long workoutId, Model model){
+	}
+
+	// SAVE WORKOUT
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save(Workout workout) {
+		System.out.println("SAVE ENDPOINT");
+		System.out.println(workout);
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = user.getUsername();
+		User userNow = urepository.findByUsername(username);
+		workout.setUser(userNow);
+		wrepository.save(workout);
+		return "redirect:workoutlist";
+	}
+
+	// DELETE WORKOUT
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasAuthority('USER')")
+	public String deleteBook(@PathVariable("id") Long workoutId, Model model) {
+		wrepository.deleteById(workoutId);
+		return "redirect:../workoutlist";
+	}
+
+	// EDIT WORKOUT
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String editWorkout(@PathVariable("id") Long workoutId, Model model) {
 		model.addAttribute("workout", wrepository.findById(workoutId));
 		model.addAttribute("focuses", frepository.findAll());
 		return "editworkout";
-		}
-		
+	}
+
 }

@@ -11,7 +11,7 @@ import com.example.personaltrainer.web.WorkoutController;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class PersonaltrainerApplicationTests {
-	
+
 	@Autowired
 	private WorkoutController controller;
 
